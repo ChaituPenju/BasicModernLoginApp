@@ -8,4 +8,10 @@ data class User(
     val email: String,
     @SerializedName("access_token")
     val accessToken: String
-)
+) {
+    fun convertToString(): String {
+        return "ID : $id\n" +
+               "Name : $name\n" +
+               "Email : $email"
+    }
+}

@@ -9,6 +9,8 @@ import androidx.lifecycle.lifecycleScope
 import com.chaitupenju.basicmodernloginapp.data.Response
 import com.chaitupenju.basicmodernloginapp.data.UserPreferences
 import com.chaitupenju.basicmodernloginapp.databinding.FragmentLoginBinding
+import com.chaitupenju.basicmodernloginapp.network.AuthApi
+import com.chaitupenju.basicmodernloginapp.network.AuthApiImpl
 import com.chaitupenju.basicmodernloginapp.repository.AuthRepository
 import com.chaitupenju.basicmodernloginapp.ui.BaseFragment
 import com.chaitupenju.basicmodernloginapp.ui.home.HomeActivity
@@ -22,16 +24,18 @@ import kotlinx.coroutines.flow.collectLatest
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
-    val service = com.chaitupenju.basicmodernloginapp.network.AuthApi.create()
-    val authRepository = AuthRepository(service)
+    val service: AuthApi = AuthApiImpl()
+    lateinit var userPrefs: UserPreferences
+
+    val authRepository get() = AuthRepository(service, userPrefs)
 
     val authViewModel by viewModels<AuthViewModel> { ViewModelFactory(authRepository) }
-    val userPrefs: UserPreferences get() = UserPreferences(requireContext())
 
     override fun getViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentLoginBinding {
+        userPrefs = UserPreferences(requireContext())
         return FragmentLoginBinding.inflate(inflater, container, false)
     }
 
@@ -40,15 +44,16 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             authViewModel.loginResult.collectLatest {
-                binding.pbLogin.visibility(false)
 
                 when (it) {
                     is Response.Loading -> binding.pbLogin.visibility(true)
+
                     is Response.Success -> {
                         binding.pbLogin.visibility(false)
-                        userPrefs.saveAccessToken(token = it.data.accessToken)
+                        authViewModel.saveAccessToken(token = it.data.user?.accessToken ?: "")
                         requireActivity().startAnActivity(HomeActivity::class.java)
                     }
+
                     is Response.Error -> {
                         binding.pbLogin.visibility(false)
                         createToast(it.errorMessage)

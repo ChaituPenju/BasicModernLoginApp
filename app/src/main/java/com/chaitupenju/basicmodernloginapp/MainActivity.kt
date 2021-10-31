@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
         lifecycleScope.launchWhenCreated {
             userPrefs.accessToken.collectLatest {
-                val activity = if (it == null) AuthenticationActivity::class.java else HomeActivity::class.java
+                val activity = if (it == null || it == "") AuthenticationActivity::class.java else HomeActivity::class.java
                 startAnActivity(activity)
             }
         }

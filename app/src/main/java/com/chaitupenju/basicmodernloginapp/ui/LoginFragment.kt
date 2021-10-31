@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.chaitupenju.basicmodernloginapp.databinding.FragmentLoginBinding
+import com.chaitupenju.basicmodernloginapp.repository.AuthRepository
 
 
 class LoginFragment : Fragment() {
@@ -26,10 +27,11 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val service = com.chaitupenju.basicmodernloginapp.network.AuthApi.create()
+        val authRepository = AuthRepository(service)
 
         loginBinding.btnLogin.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                println(service.login(username = loginBinding.etUsername.text.toString(), password = loginBinding.etPassword.text.toString()))
+                println(authRepository.login(username = loginBinding.etUsername.text.toString(), password = loginBinding.etPassword.text.toString()))
             }
         }
     }

@@ -1,14 +1,13 @@
 package com.chaitupenju.basicmodernloginapp
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.chaitupenju.basicmodernloginapp.data.UserPreferences
-import com.chaitupenju.basicmodernloginapp.ui.AuthenticationActivity
+import com.chaitupenju.basicmodernloginapp.ui.authentication.AuthenticationActivity
+import com.chaitupenju.basicmodernloginapp.ui.home.HomeActivity
+import com.chaitupenju.basicmodernloginapp.utils.startAnActivity
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.first
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,8 +18,8 @@ class MainActivity : AppCompatActivity() {
 
         lifecycleScope.launchWhenCreated {
             userPrefs.accessToken.collectLatest {
-                Toast.makeText(this@MainActivity, it ?: "Token is Null!!", Toast.LENGTH_LONG).show()
-                startActivity(Intent(this@MainActivity, AuthenticationActivity::class.java))
+                val activity = if (it == null) AuthenticationActivity::class.java else HomeActivity::class.java
+                startAnActivity(activity)
             }
         }
     }

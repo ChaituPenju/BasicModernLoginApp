@@ -1,4 +1,4 @@
-package com.chaitupenju.basicmodernloginapp.ui
+package com.chaitupenju.basicmodernloginapp.ui.authentication
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

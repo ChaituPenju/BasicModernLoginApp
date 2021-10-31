@@ -65,6 +65,7 @@ dependencies {
     // Ktor Dependency for Networking
     implementation("io.ktor:ktor-client-android:$ktor_version")
     implementation("io.ktor:ktor-client-gson:$ktor_version")
+    implementation("io.ktor:ktor-client-logging-jvm:$ktor_version")
 
     // Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"

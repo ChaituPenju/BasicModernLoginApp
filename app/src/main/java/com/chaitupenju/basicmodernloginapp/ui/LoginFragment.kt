@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.chaitupenju.basicmodernloginapp.data.Response
+import com.chaitupenju.basicmodernloginapp.data.UserPreferences
 import com.chaitupenju.basicmodernloginapp.databinding.FragmentLoginBinding
 import com.chaitupenju.basicmodernloginapp.repository.AuthRepository
 import com.chaitupenju.basicmodernloginapp.viewmodel.AuthViewModel
@@ -21,6 +22,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     val authRepository = AuthRepository(service)
 
     val authViewModel by viewModels<AuthViewModel> { ViewModelFactory(authRepository) }
+    val userPrefs: UserPreferences get() = UserPreferences(requireContext())
 
     override fun getViewBinding(
         inflater: LayoutInflater,
@@ -43,7 +45,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                 authViewModel.loginResult.collectLatest {
                     when (it) {
-                        is Response.Success -> println(it.data)
+                        is Response.Success -> {
+                            userPrefs.saveAccessToken(token = it.data.accessToken)
+                            println(it.data)
+                        }
                         is Response.Error -> println(it.errorMessage)
                         is Response.Loading -> println("Loading...")
                     }

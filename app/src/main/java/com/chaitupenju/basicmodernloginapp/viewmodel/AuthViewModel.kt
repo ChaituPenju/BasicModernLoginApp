@@ -3,10 +3,9 @@ package com.chaitupenju.basicmodernloginapp.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chaitupenju.basicmodernloginapp.data.LoginResponse
-import com.chaitupenju.basicmodernloginapp.data.Response
+import com.chaitupenju.basicmodernloginapp.utils.Response
 import com.chaitupenju.basicmodernloginapp.repository.AuthRepository
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class AuthViewModel(

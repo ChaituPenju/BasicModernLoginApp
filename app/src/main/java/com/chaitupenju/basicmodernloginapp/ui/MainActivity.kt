@@ -1,4 +1,4 @@
-package com.chaitupenju.basicmodernloginapp
+package com.chaitupenju.basicmodernloginapp.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.collectLatest
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
         val userPrefs = UserPreferences(this@MainActivity)
 

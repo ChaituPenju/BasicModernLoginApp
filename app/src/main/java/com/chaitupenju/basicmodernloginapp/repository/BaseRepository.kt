@@ -1,6 +1,6 @@
 package com.chaitupenju.basicmodernloginapp.repository
 
-import com.chaitupenju.basicmodernloginapp.data.Response
+import com.chaitupenju.basicmodernloginapp.utils.Response
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

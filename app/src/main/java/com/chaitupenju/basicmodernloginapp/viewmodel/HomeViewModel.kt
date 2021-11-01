@@ -2,7 +2,7 @@ package com.chaitupenju.basicmodernloginapp.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chaitupenju.basicmodernloginapp.data.Response
+import com.chaitupenju.basicmodernloginapp.utils.Response
 import com.chaitupenju.basicmodernloginapp.data.User
 import com.chaitupenju.basicmodernloginapp.repository.UserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,6 +19,18 @@ class HomeViewModel(
 
     fun getUser(accessToken: String) = viewModelScope.launch {
         _userState.update { repository.getUser(accessToken) }
+    }
+
+    suspend fun logout(): String {
+        var logoutMessage = ""
+
+        when (val it = repository.logout()) {
+            is Response.Success -> logoutMessage = it.data.message
+            is Response.Error -> logoutMessage = it.errorMessage
+            else -> Unit
+        }
+
+        return logoutMessage
     }
 
 }

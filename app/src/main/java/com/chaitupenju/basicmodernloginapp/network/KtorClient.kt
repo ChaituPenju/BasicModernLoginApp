@@ -7,11 +7,16 @@ import io.ktor.client.features.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.logging.*
 import io.ktor.client.request.*
+import io.ktor.http.*
 
 object KtorClient {
 
-    operator fun invoke(accessToken: String? = null): HttpClient {
+    operator fun invoke(): HttpClient {
         return HttpClient(Android) {
+            install(DefaultRequest) {
+                contentType(ContentType.Application.Json)
+            }
+
             install(JsonFeature) {
                 serializer = GsonSerializer()
             }

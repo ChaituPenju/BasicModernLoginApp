@@ -1,6 +1,6 @@
 package com.chaitupenju.basicmodernloginapp.repository
 
-import com.chaitupenju.basicmodernloginapp.network.UserApi
+import com.chaitupenju.basicmodernloginapp.network.api.UserApi
 
 class UserRepository(
     private val api: UserApi
@@ -10,4 +10,7 @@ class UserRepository(
         api.user(accessToken)
     }
 
+    suspend fun logout() = wrapResponse {
+        api.logout()
+    }
 }

@@ -6,15 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.chaitupenju.basicmodernloginapp.data.Response
+import com.chaitupenju.basicmodernloginapp.utils.Response
 import com.chaitupenju.basicmodernloginapp.data.UserPreferences
 import com.chaitupenju.basicmodernloginapp.databinding.FragmentLoginBinding
-import com.chaitupenju.basicmodernloginapp.network.AuthApi
-import com.chaitupenju.basicmodernloginapp.network.AuthApiImpl
+import com.chaitupenju.basicmodernloginapp.network.api.AuthApi
+import com.chaitupenju.basicmodernloginapp.network.api.AuthApiImpl
 import com.chaitupenju.basicmodernloginapp.repository.AuthRepository
 import com.chaitupenju.basicmodernloginapp.ui.BaseFragment
 import com.chaitupenju.basicmodernloginapp.ui.home.HomeActivity
-import com.chaitupenju.basicmodernloginapp.utils.createToast
+import com.chaitupenju.basicmodernloginapp.utils.createSnackBar
 import com.chaitupenju.basicmodernloginapp.utils.startAnActivity
 import com.chaitupenju.basicmodernloginapp.utils.visibility
 import com.chaitupenju.basicmodernloginapp.viewmodel.AuthViewModel
@@ -56,7 +56,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
                     is Response.Error -> {
                         binding.pbLogin.visibility(false)
-                        createToast(it.errorMessage)
+                        createSnackBar(it.errorMessage)
                     }
                 }
             }

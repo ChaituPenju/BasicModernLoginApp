@@ -1,4 +1,4 @@
-package com.chaitupenju.basicmodernloginapp.network
+package com.chaitupenju.basicmodernloginapp.network.api
 
 import com.chaitupenju.basicmodernloginapp.data.LoginResponse
 

@@ -1,4 +1,4 @@
-package com.chaitupenju.basicmodernloginapp.data
+package com.chaitupenju.basicmodernloginapp.utils
 
 sealed class Response<out T> {
     object Loading: Response<Nothing>()

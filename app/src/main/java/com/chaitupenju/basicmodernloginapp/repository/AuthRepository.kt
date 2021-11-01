@@ -1,10 +1,7 @@
 package com.chaitupenju.basicmodernloginapp.repository
 
-import com.chaitupenju.basicmodernloginapp.data.Response
+import com.chaitupenju.basicmodernloginapp.network.api.AuthApi
 import com.chaitupenju.basicmodernloginapp.data.UserPreferences
-import com.chaitupenju.basicmodernloginapp.network.AuthApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class AuthRepository(
     private val api: AuthApi,

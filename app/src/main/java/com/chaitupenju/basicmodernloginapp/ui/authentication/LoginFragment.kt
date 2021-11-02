@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.util.PatternsCompat
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.chaitupenju.basicmodernloginapp.utils.Response
@@ -20,6 +22,7 @@ import com.chaitupenju.basicmodernloginapp.utils.visibility
 import com.chaitupenju.basicmodernloginapp.viewmodel.AuthViewModel
 import com.chaitupenju.basicmodernloginapp.viewmodel.ViewModelFactory
 import kotlinx.coroutines.flow.collectLatest
+import java.util.regex.Matcher
 
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>() {
@@ -31,6 +34,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     val authViewModel by viewModels<AuthViewModel> { ViewModelFactory(authRepository) }
 
+    private var emailValid = false
+    private var passwordValid = false
+
     override fun getViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -41,6 +47,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        registerCredentialTextListeners()
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             authViewModel.loginResult.collectLatest {
@@ -66,8 +74,23 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
             val username = binding.etUsername.text.toString().trim()
             val password = binding.etPassword.text.toString().trim()
 
-            authViewModel.login(username, password)
+            if (emailValid and passwordValid)
+                authViewModel.login(username, password)
+            else createSnackBar("Please enter valid Credentials to Proceed!")
         }
     }
 
+    private fun registerCredentialTextListeners() {
+        binding.etUsername.doOnTextChanged { text, _, _, _ ->
+            emailValid = PatternsCompat.EMAIL_ADDRESS.matcher(text!!).matches()
+            println("Email valid $emailValid")
+            binding.tilUsername.error = if (!emailValid) "Invalid Username/Email" else ""
+        }
+
+        binding.etPassword.doOnTextChanged { text, _, _, _ ->
+            passwordValid = text?.length!! > 6
+            println("Password valid $passwordValid")
+            binding.tilPassword.error = if (!passwordValid) "Password must be greater than 6 characters" else ""
+        }
+    }
 }

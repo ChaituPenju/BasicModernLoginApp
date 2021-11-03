@@ -1,8 +1,9 @@
 package com.chaitupenju.basicmodernloginapp.repository
 
 import com.chaitupenju.basicmodernloginapp.network.api.UserApi
+import javax.inject.Inject
 
-class UserRepository(
+class UserRepository @Inject constructor(
     private val api: UserApi
 ): BaseRepository() {
 

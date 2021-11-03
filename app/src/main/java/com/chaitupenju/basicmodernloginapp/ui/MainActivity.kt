@@ -7,8 +7,10 @@ import com.chaitupenju.basicmodernloginapp.data.UserPreferences
 import com.chaitupenju.basicmodernloginapp.ui.authentication.AuthenticationActivity
 import com.chaitupenju.basicmodernloginapp.ui.home.HomeActivity
 import com.chaitupenju.basicmodernloginapp.utils.startAnActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

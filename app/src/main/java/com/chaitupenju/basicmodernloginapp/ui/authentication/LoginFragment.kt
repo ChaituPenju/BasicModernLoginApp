@@ -6,33 +6,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.util.PatternsCompat
 import androidx.core.widget.doOnTextChanged
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import com.chaitupenju.basicmodernloginapp.utils.Response
-import com.chaitupenju.basicmodernloginapp.data.UserPreferences
 import com.chaitupenju.basicmodernloginapp.databinding.FragmentLoginBinding
-import com.chaitupenju.basicmodernloginapp.network.api.AuthApi
-import com.chaitupenju.basicmodernloginapp.network.api.AuthApiImpl
-import com.chaitupenju.basicmodernloginapp.repository.AuthRepository
 import com.chaitupenju.basicmodernloginapp.ui.BaseFragment
 import com.chaitupenju.basicmodernloginapp.ui.home.HomeActivity
+import com.chaitupenju.basicmodernloginapp.utils.Response
 import com.chaitupenju.basicmodernloginapp.utils.createSnackBar
 import com.chaitupenju.basicmodernloginapp.utils.startAnActivity
 import com.chaitupenju.basicmodernloginapp.utils.visibility
 import com.chaitupenju.basicmodernloginapp.viewmodel.AuthViewModel
-import com.chaitupenju.basicmodernloginapp.viewmodel.ViewModelFactory
 import kotlinx.coroutines.flow.collectLatest
-import java.util.regex.Matcher
 
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
-    val service: AuthApi = AuthApiImpl()
-    lateinit var userPrefs: UserPreferences
-
-    val authRepository get() = AuthRepository(service, userPrefs)
-
-    val authViewModel by viewModels<AuthViewModel> { ViewModelFactory(authRepository) }
+    private val authViewModel by activityViewModels<AuthViewModel>()
 
     private var emailValid = false
     private var passwordValid = false
@@ -41,7 +30,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentLoginBinding {
-        userPrefs = UserPreferences(requireContext())
         return FragmentLoginBinding.inflate(inflater, container, false)
     }
 

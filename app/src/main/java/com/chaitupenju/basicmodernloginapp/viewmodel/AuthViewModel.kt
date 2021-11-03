@@ -3,12 +3,16 @@ package com.chaitupenju.basicmodernloginapp.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chaitupenju.basicmodernloginapp.data.LoginResponse
-import com.chaitupenju.basicmodernloginapp.utils.Response
 import com.chaitupenju.basicmodernloginapp.repository.AuthRepository
-import kotlinx.coroutines.flow.*
+import com.chaitupenju.basicmodernloginapp.utils.Response
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AuthViewModel(
+@HiltViewModel
+class AuthViewModel @Inject constructor(
     private val repository: AuthRepository
 ): ViewModel() {
 

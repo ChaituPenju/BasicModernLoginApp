@@ -1,9 +1,10 @@
 package com.chaitupenju.basicmodernloginapp.repository
 
-import com.chaitupenju.basicmodernloginapp.network.api.AuthApi
 import com.chaitupenju.basicmodernloginapp.data.UserPreferences
+import com.chaitupenju.basicmodernloginapp.network.api.AuthApi
+import javax.inject.Inject
 
-class AuthRepository(
+class AuthRepository @Inject constructor(
     private val api: AuthApi,
     private val preferences: UserPreferences
 ): BaseRepository() {
